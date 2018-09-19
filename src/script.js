@@ -122,3 +122,43 @@ function resizeCanvas() {
     canvas.height = canvas.clientHeight;
     if ( canvasState.length ) updateCanvas();
 }
+
+
+var time;
+window.onload = resetTimer();
+document.addEventListener('touchstart', resetTimer);
+document.addEventListener('touchmove', resetTimer);
+    
+function showResetScreen() {
+    document.removeEventListener('touchstart', resetTimer);
+    document.removeEventListener('touchmove', resetTimer);
+    document.querySelector('html').classList.add('reset-open');
+    clearTimeout(time);
+    time = setTimeout(resetCanvas, 300000);
+}
+    
+function resetCanvas() {
+    document.addEventListener('touchstart', resetTimer);
+    document.addEventListener('touchmove', resetTimer);
+    resetTimer();
+    context.clearRect( 0, 0, canvas.width, canvas.height );
+    canvasState.length = 0;
+    undoButton.classList.add( 'disabled' );
+}
+
+function continueDrawing() {
+    document.addEventListener('touchstart', resetTimer);
+    document.addEventListener('touchmove', resetTimer);
+    resetTimer();
+}
+
+function resetTimer() {
+    document.querySelector('html').classList.remove('reset-open');
+    clearTimeout(time);
+    time = setTimeout(showResetScreen, 60000);
+}
+
+document.querySelector('#continue-button').addEventListener('mouseup', continueDrawing);
+document.querySelector('#continue-button').addEventListener('touchend', continueDrawing);
+document.querySelector('#reset-button').addEventListener('mouseup', resetCanvas);
+document.querySelector('#reset-button').addEventListener('touchend', resetCanvas);
