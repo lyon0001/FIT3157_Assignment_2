@@ -125,7 +125,7 @@ function resizeCanvas() {
 
 
 var time;
-window.onload = resetTimer();
+//window.onload = resetTimer();
 document.addEventListener('touchstart', resetTimer);
 document.addEventListener('touchmove', resetTimer);
     
@@ -138,12 +138,12 @@ function showResetScreen() {
 }
     
 function resetCanvas() {
-    document.addEventListener('touchstart', resetTimer);
-    document.addEventListener('touchmove', resetTimer);
-    resetTimer();
     context.clearRect( 0, 0, canvas.width, canvas.height );
     canvasState.length = 0;
     undoButton.classList.add( 'disabled' );
+    document.addEventListener('touchstart', resetTimer);
+    document.addEventListener('touchmove', resetTimer);
+    resetTimer();
 }
 
 function continueDrawing() {
@@ -154,8 +154,10 @@ function continueDrawing() {
 
 function resetTimer() {
     document.querySelector('html').classList.remove('reset-open');
-    clearTimeout(time);
-    time = setTimeout(showResetScreen, 60000);
+    if(canvasState.length>0) {
+        clearTimeout(time);
+        time = setTimeout(showResetScreen, 1000);
+    }
 }
 
 document.querySelector('#continue-button').addEventListener('mouseup', continueDrawing);
