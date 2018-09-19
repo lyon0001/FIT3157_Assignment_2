@@ -133,10 +133,14 @@ body, #content {
 
 #artwork {
     position: fixed;
-    background: white;
+    background-color: white;
+    background-image: url(images/artwork_bg.jpg);
+    background-size: cover;
     width: 100vw;
     height: 100vh;
     z-index: 1;
     display: grid;
-    transform: translateX(100vw);
+    grid-template-columns: auto 20vw 4vw 20vw 4vw 20vw 4vw 20vw auto;
+    grid-template-rows: 4vh auto 4vh 23vh 4vh 23vh 4vh 23vh 4vh;
+    transform: translateX(0vw);
 }
